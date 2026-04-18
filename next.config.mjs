@@ -1,7 +1,6 @@
-/** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    unoptimized: true  // allows external img src without domain config
+    unoptimized: true
   }
 }
 export default nextConfig
