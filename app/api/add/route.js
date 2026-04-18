@@ -1,8 +1,10 @@
 import { NextResponse } from 'next/server'
 import clientPromise from '@/lib/mongodb'
 import { getServerSession } from 'next-auth'
+import { authOptions } from "@/lib/authOptions"
 
 export async function POST(request) {
+  const session = await getServerSession(authOptions)  // ✅ pass authOptions
   try {
     const body = await request.json()
     console.log('✅ Body received:', body)

@@ -2,13 +2,14 @@ import Link from "next/link"
 import clientPromise from "@/lib/mongodb"
 import { notFound, redirect } from "next/navigation"
 import { getServerSession } from "next-auth"
+import { authOptions } from "@/lib/authOptions"
 
 export default async function Page({ params }) {
+  const session = await getServerSession(authOptions)  // ✅ pass authOptions
   const handle = (await params).handle
   
   // ✅ Get current session
-  const session = await getServerSession()
-
+  
   // ✅ If not logged in, send to login page
   if (!session) {
     redirect("/login")
