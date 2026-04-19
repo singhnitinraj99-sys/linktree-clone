@@ -1,15 +1,16 @@
 "use client"
 import React, { useState, useEffect, Suspense } from 'react'  // ✅ add Suspense
 import { ToastContainer, toast } from 'react-toastify'
+import { useSearchParams, useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
 
 const GenerateContent = () => {  // ✅ rename main component to GenerateContent
   const { data: session, status } = useSession()
   const router = useRouter()
+  const searchParams = useSearchParams()
 
-const [handle, sethandle] = useState("")
-const [pic, setpic] = useState("")
+  const [handle, sethandle] = useState(searchParams.get('handle') || "")
+  const [pic, setpic] = useState("")
   const [links, setLinks] = useState([{link: "", linktext: ""}])
   const [desc, setdesc] = useState("")
 
@@ -43,7 +44,7 @@ const [pic, setpic] = useState("")
       body: JSON.stringify({ links, handle, pic, desc })
     }
     try {
-      const r = await fetch("/api/generate", requestOptions)
+      const r = await fetch("/api/add", requestOptions)
       if (!r.ok) {
         const text = await r.text()
         console.error("Server error:", text)
